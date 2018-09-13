@@ -63,18 +63,12 @@ class EC2Instance:
         shadow_password = crypt.crypt(self.password)
         print("Adding ssh user...")
         command = "sudo useradd -m " + self.username + " -p " + shadow_password
-        # command = 'ls'
         stdin, stdout, stderr = self.ssh.exec_command(command)
         stdin.flush()
         stdin.channel.shutdown_write()
         ret = stdout.read()
         err = stderr.read()
         print ("The user has been added.")
-        # if ret:
-             # print ("Added" + self.username + " to EC2 instance.")
-        # elif err:
-             # return err
-        # else:
         return self.allow_access()
 
     def allow_access(self):
